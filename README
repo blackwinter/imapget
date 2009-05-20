@@ -2,7 +2,7 @@
 
 == VERSION
 
-This documentation refers to imapget version 0.0.2
+This documentation refers to imapget version 0.0.3
 
 
 == DESCRIPTION
@@ -15,8 +15,9 @@ different from your typical *sync* tool.
 == LINKS
 
 <b></b>
-Documentation::      <http://rdoc.info/projects/blackwinter/imapget>
-Source code::        <http://github.com/blackwinter/imapget>
+Documentation::     <http://rdoc.info/projects/blackwinter/imapget>
+Source code::       <http://github.com/blackwinter/imapget>
+Rubyforge project:: <http://rubyforge.org/projects/imapget>
 
 
 == AUTHORS

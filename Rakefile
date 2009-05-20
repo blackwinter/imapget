@@ -5,14 +5,15 @@ begin
 
   Hen.lay! {{
     :rubyforge => {
-      :project => %q{},
-      :package => %q{imapget}
+      :project  => %q{imapget},
+      :package  => %q{imapget},
+      :rdoc_dir => nil
     },
 
     :gem => {
       :version      => IMAPGet::VERSION,
       :summary      => %q{Get IMAP mails.},
-      :homepage     => %q{http://github.com/blackwinter/imapget},
+      :homepage     => %q{http://imapget.rubyforge.org/},
       :files        => FileList['lib/**/*.rb', 'bin/*'].to_a,
       :extra_files  => FileList['[A-Z]*', 'example/*'].to_a,
       :dependencies => %w[highline]
