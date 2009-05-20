@@ -72,7 +72,7 @@ class IMAPGet
           Regexp.new(value)
         when Array
           Regexp.new(value.map { |v|
-            "\\A#{Regexp.escape(v)}(?:#{delim}|\\z)"
+            "\\A#{Regexp.escape(Net::IMAP.encode_utf7(v))}(?:#{delim}|\\z)"
           }.join('|'))
       end
     }
@@ -123,7 +123,7 @@ class IMAPGet
   def get(path)
     each { |mailbox|
       name = mailbox.name
-      dir  = File.join(path, name)
+      dir  = File.join(path, Net::IMAP.decode_utf7(name))
 
       if File.directory?(dir)
         last_update = File.mtime(dir)
