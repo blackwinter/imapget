@@ -1,0 +1,109 @@
+#! /usr/bin/ruby
+
+#--
+###############################################################################
+#                                                                             #
+# imapget -- Download IMAP mails                                              #
+#                                                                             #
+# Copyright (C) 2009 Jens Wille                                               #
+#                                                                             #
+# Authors:                                                                    #
+#     Jens Wille <jens.wille@uni-koeln.de>                                    #
+#                                                                             #
+# imapget is free software; you can redistribute it and/or modify it under    #
+# the terms of the GNU General Public License as published by the Free        #
+# Software Foundation; either version 3 of the License, or (at your option)   #
+# any later version.                                                          #
+#                                                                             #
+# imapget is distributed in the hope that it will be useful, but WITHOUT ANY  #
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS   #
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more       #
+# details.                                                                    #
+#                                                                             #
+# You should have received a copy of the GNU General Public License along     #
+# with imapget. If not, see <http://www.gnu.org/licenses/>.                   #
+#                                                                             #
+###############################################################################
+#++
+
+require 'optparse'
+require 'yaml'
+
+require 'rubygems'
+require 'highline/import'
+
+$: << File.join(File.dirname(__FILE__), '..', 'lib')
+
+require 'imapget'
+
+USAGE = "Usage: #{$0} [-h|--help] [options] <profile>"
+abort USAGE if ARGV.empty?
+
+options = {
+  :config    => 'config.yaml',
+  :directory => nil,
+  :check     => false
+}
+
+OptionParser.new { |opts|
+  opts.banner = USAGE
+
+  opts.separator ''
+  opts.separator 'Options:'
+
+  opts.on('-c', '--config YAML', "Config file [Default: #{options[:config]}#{' (currently not present)' unless File.readable?(options[:config])}]") { |f|
+    abort "Can't find config file: #{f}." unless File.readable?(f)
+
+    options[:config] = f
+  }
+
+  opts.separator ''
+
+  opts.on('-d', '--directory PATH', "Target directory to store mails [Default: BASE_DIR/<profile>]") { |d|
+    options[:directory] = d
+  }
+
+  opts.separator ''
+
+  opts.on('-C', '--check', "Only check include/exclude statements") {
+    options[:check] = true
+  }
+
+  opts.separator ''
+  opts.separator 'Generic options:'
+
+  opts.on('-h', '--help', 'Print this help message and exit') {
+    abort opts.to_s
+  }
+
+  opts.on('--version', 'Print program version and exit') {
+    abort "#{File.basename($0)} v#{IMAPGet::VERSION}"
+  }
+}.parse!
+
+profile = ARGV.shift
+abort "Profile missing\n#{USAGE}" unless profile
+
+global_config = YAML.load_file(options[:config])
+
+config = global_config[profile]
+abort "Profile not found: #{profile}" unless config
+
+global_config.delete_if { |k, _| k.is_a?(String) }
+config.update(global_config) { |key, old, new| old }
+
+host = config[:host]
+abort "No host for profile #{profile}" unless host
+
+config[:user]     ||= ask("User for #{host}: ")
+config[:password] ||= ask("Password for #{config[:user]}@#{host}: ") { |q| q.echo = false }
+
+imapget = IMAPGet.new(config)
+
+if options[:check]
+  imapget.each { |mailbox|
+    puts mailbox.name
+  }
+else
+  imapget.get(options[:directory] || File.join(config[:base_dir] || '.', profile))
+end

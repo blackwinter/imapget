@@ -1,0 +1,41 @@
+= imapget - Get IMAP mails.
+
+== VERSION
+
+This documentation refers to imapget version 0.0.1
+
+
+== DESCRIPTION
+
+Downloads IMAP mails locally. It deletes local mails that have been deleted
+on the server, but never ever modifies anything on the server! Thus, it's
+different from your typical *sync* tool.
+
+
+== LINKS
+
+<b></b>
+Documentation::      <http://rdoc.info/projects/blackwinter/imapget>
+Source code::        <http://github.com/blackwinter/imapget>
+
+
+== AUTHORS
+
+* Jens Wille <mailto:jens.wille@uni-koeln.de>
+
+
+== LICENSE AND COPYRIGHT
+
+Copyright (C) 2009 Jens Wille,
+
+imapget is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+imapget is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+imapget. If not, see <http://www.gnu.org/licenses/>.
