@@ -36,8 +36,7 @@ $: << File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'imapget'
 
-USAGE = "Usage: #{$0} [-h|--help] [options] <profile>"
-abort USAGE if ARGV.empty?
+USAGE = "Usage: #{$0} [-h|--help] [options] [profile]..."
 
 options = {
   :config    => 'config.yaml',
@@ -52,8 +51,6 @@ OptionParser.new { |opts|
   opts.separator 'Options:'
 
   opts.on('-c', '--config YAML', "Config file [Default: #{options[:config]}#{' (currently not present)' unless File.readable?(options[:config])}]") { |f|
-    abort "Can't find config file: #{f}." unless File.readable?(f)
-
     options[:config] = f
   }
 
@@ -81,29 +78,36 @@ OptionParser.new { |opts|
   }
 }.parse!
 
-profile = ARGV.shift
-abort "Profile missing\n#{USAGE}" unless profile
+abort "Config file not found: #{options[:config]}\n#{USAGE}" unless File.readable?(options[:config])
 
-global_config = YAML.load_file(options[:config])
+global_config  = YAML.load_file(options[:config])
+default_config = global_config.reject { |k, _| k.is_a?(String) }
 
-config = global_config[profile]
-abort "Profile not found: #{profile}" unless config
+profiles = ARGV.empty? ? global_config.keys.select { |k| k.is_a?(String) }.sort : ARGV
 
-global_config.delete_if { |k, _| k.is_a?(String) }
-config.update(global_config) { |key, old, new| old }
+profiles.each { |profile|
+  unless config = global_config[profile]
+    warn "Profile not found: #{profile}"
+    next
+  end
 
-host = config[:host]
-abort "No host for profile #{profile}" unless host
+  config.update(default_config) { |key, old, new| old }
 
-config[:user]     ||= ask("User for #{host}: ")
-config[:password] ||= ask("Password for #{config[:user]}@#{host}: ") { |q| q.echo = false }
+  unless host = config[:host]
+    warn "No host for profile #{profile}"
+    next
+  end
 
-imapget = IMAPGet.new(config)
+  config[:user]     ||= ask("User for #{profile} on #{host}: ")
+  config[:password] ||= ask("Password for #{config[:user]}@#{host}: ") { |q| q.echo = false }
 
-if options[:check]
-  imapget.each { |mailbox|
-    puts mailbox.name
-  }
-else
-  imapget.get(options[:directory] || File.join(config[:base_dir] || '.', profile))
-end
+  imapget = IMAPGet.new(config)
+
+  if options[:check]
+    imapget.each { |mailbox|
+      puts mailbox.name
+    }
+  else
+    imapget.get(options[:directory] || File.join(config[:base_dir] || '.', profile))
+  end
+}
