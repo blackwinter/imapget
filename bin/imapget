@@ -93,6 +93,8 @@ profiles.each { |profile|
 
   config.update(default_config) { |key, old, new| old }
 
+  next if config[:skip]
+
   unless host = config[:host]
     warn "No host for profile #{profile}"
     next

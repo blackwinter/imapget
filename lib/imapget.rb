@@ -27,6 +27,7 @@
 require 'time'
 require 'net/imap'
 require 'fileutils'
+require 'enumerator' unless [].respond_to?(:each_slice)
 
 require 'imapget/version'
 
@@ -37,28 +38,21 @@ class IMAPGet
   STRATEGIES       = [:include, :exclude]
   DEFAULT_STRATEGY = :exclude
 
+  DEFAULT_LEVEL = 2
   DEFAULT_DELIM = '/'
+
+  FETCH_ATTR = %w[FLAGS INTERNALDATE RFC822]
+  FETCH_SIZE = 100
 
   attr_reader   :imap, :strategy, :incl, :excl
   attr_accessor :log_level
 
   def initialize(options)
-    @imap = Net::IMAP.new(
-      options[:host],
-      options[:port] || Net::IMAP::PORT,
-      options[:use_ssl],
-      options[:certs],
-      options[:verify]
-    )
+    @log_level = options[:log_level] || DEFAULT_LEVEL
 
-    @imap.authenticate(
-      @imap.capability.include?('AUTH=CRAM-MD5') ? 'CRAM-MD5' : 'LOGIN',
-      options[:user], options[:password]
-    )
-
-    inclexcl(options)
-
-    @log_level = 2
+    init_imap    options
+    authenticate options
+    inclexcl     options
   end
 
   def inclexcl(options)
@@ -109,7 +103,7 @@ class IMAPGet
       when Net::IMAP::MailboxList then mailbox_or_name.name
       when String                 then mailbox_or_name
       else
-        raise TypeError, "String or MailboxList expected, got #{mailbox_or_name.class}"
+        raise TypeError, "MailboxList or String expected, got #{mailbox_or_name.class}"
     end
 
     case strategy
@@ -122,30 +116,20 @@ class IMAPGet
 
   def get(path)
     each { |mailbox|
-      name = mailbox.name
-      dir  = File.join(path, Net::IMAP.decode_utf7(name))
-
-      if File.directory?(dir)
-        last_update = File.mtime(dir)
-      else
-        FileUtils.mkdir_p(dir)
-        last_update = Time.at(0)
-      end
+      name   = mailbox.name
+      dir    = File.join(path, Net::IMAP.decode_utf7(name))
+      update = check_dir(dir)
 
       log "#{'=' * 10} #{name} #{'=' * 10}"
       imap.examine(name)
 
-      uids = imap.uid_search("SINCE #{last_update.utc.strftime('%d-%b-%Y')}")
+      uids = imap.uid_search("SINCE #{update.strftime('%d-%b-%Y')}")
       next if uids.empty?
 
-      imap.uid_fetch(uids, %w[RFC822 INTERNALDATE FLAGS]).each { |mail|
-        uid   = mail.attr['UID']
-        flags = mail.attr['FLAGS']
-        file  = File.join(dir, uid.to_s)
-        date  = Time.parse(mail.attr['INTERNALDATE'])
-
-        deleted = flags.include?(Net::IMAP::DELETED)
+      fetch(uids) { |mail, uid, flags, date, body|
+        file    = File.join(dir, uid.to_s)
         exists  = File.exists?(file)
+        deleted = flags.include?(Net::IMAP::DELETED)
 
         if deleted
           if exists
@@ -155,7 +139,7 @@ class IMAPGet
         else
           unless exists && File.mtime(file) >= date
             info "#{dir}: #{name} -> #{uid}"
-            File.open(file, 'w') { |f| f.puts mail.attr['RFC822'] }
+            File.open(file, 'w') { |f| f.puts body }
           end
         end
       }
@@ -165,6 +149,44 @@ class IMAPGet
   alias_method :download, :get
 
   private
+
+  def init_imap(options)
+    @imap = Net::IMAP.new(
+      options[:host],
+      options[:port] || Net::IMAP::PORT,
+      options[:use_ssl],
+      options[:certs],
+      options[:verify]
+    )
+  end
+
+  def authenticate(options)
+    imap.authenticate(
+      imap.capability.include?('AUTH=CRAM-MD5') ? 'CRAM-MD5' : 'LOGIN',
+      options[:user], options[:password]
+    )
+  end
+
+  def fetch(uids, fetch_size = FETCH_SIZE, fetch_attr = FETCH_ATTR)
+    uids.each_slice(fetch_size) { |slice|
+      imap.uid_fetch(slice, fetch_attr).each { |mail|
+        yield mail, *['UID', *fetch_attr].map { |a|
+          v = mail.attr[a]
+          v = Time.parse(v) if a == 'INTERNALDATE'
+          v
+        }
+      }
+    }
+  end
+
+  def check_dir(dir)
+    if File.directory?(dir)
+      File.mtime(dir)
+    else
+      FileUtils.mkdir_p(dir)
+      Time.at(0)
+    end.utc
+  end
 
   def log(msg, level = 1)
     warn msg if log_level >= level

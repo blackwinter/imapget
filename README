@@ -2,7 +2,7 @@
 
 == VERSION
 
-This documentation refers to imapget version 0.0.4
+This documentation refers to imapget version 0.0.5
 
 
 == DESCRIPTION
@@ -27,7 +27,7 @@ Rubyforge project:: <http://rubyforge.org/projects/imapget>
 
 == LICENSE AND COPYRIGHT
 
-Copyright (C) 2009 Jens Wille,
+Copyright (C) 2009 Jens Wille
 
 imapget is free software: you can redistribute it and/or modify it under the
 terms of the GNU General Public License as published by the Free Software
