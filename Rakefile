@@ -1,26 +1,21 @@
-require %q{lib/imapget/version}
+require File.expand_path(%q{../lib/imapget/version}, __FILE__)
 
 begin
   require 'hen'
 
   Hen.lay! {{
     :rubyforge => {
-      :project  => %q{imapget},
-      :package  => %q{imapget},
-      :rdoc_dir => nil
+      :project => %q{imapget}
     },
 
     :gem => {
       :version      => IMAPGet::VERSION,
       :summary      => %q{Get IMAP mails.},
-      :homepage     => %q{http://imapget.rubyforge.org/},
-      :files        => FileList['lib/**/*.rb', 'bin/*'].to_a,
-      :extra_files  => FileList['[A-Z]*', 'example/*'].to_a,
+      :author       => %q{Jens Wille},
+      :email        => %q{jens.wille@uni-koeln.de},
       :dependencies => %w[highline]
     }
   }}
-rescue LoadError
-  abort "Please install the 'hen' gem first."
+rescue LoadError => err
+  warn "Please install the `hen' gem. (#{err})"
 end
-
-### Place your custom Rake tasks here.
