@@ -1,0 +1,904 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+  <title>Class: IMAPGet</title>
+
+  <link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+  <script src="./js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="class">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="./lib/imapget_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/imapget.rb">lib/imapget.rb</a></li>
+          
+            <li><a href="./lib/imapget/version_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/imapget/version.rb">lib/imapget/version.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+      <!-- Parent Class -->
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        
+        <p class="link">Object</p>
+        
+      </div>
+      
+
+      
+
+      
+      <!-- Namespace Contents -->
+      <div id="namespace-list-section" class="section">
+        <h3 class="section-header">Namespace</h3>
+        <ul class="link-list">
+          
+          <li><span class="type">MODULE</span> <a href="IMAPGet/Version.html">IMAPGet::Version</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-c-new">::new</a></li>
+          
+          <li><a href="#method-i-authenticate">#authenticate</a></li>
+          
+          <li><a href="#method-i-check_dir">#check_dir</a></li>
+          
+          <li><a href="#method-i-download">#download</a></li>
+          
+          <li><a href="#method-i-each">#each</a></li>
+          
+          <li><a href="#method-i-exclude-3F">#exclude?</a></li>
+          
+          <li><a href="#method-i-fetch">#fetch</a></li>
+          
+          <li><a href="#method-i-get">#get</a></li>
+          
+          <li><a href="#method-i-inclexcl">#inclexcl</a></li>
+          
+          <li><a href="#method-i-include-3F">#include?</a></li>
+          
+          <li><a href="#method-i-info">#info</a></li>
+          
+          <li><a href="#method-i-init_imap">#init_imap</a></li>
+          
+          <li><a href="#method-i-log">#log</a></li>
+          
+          <li><a href="#method-i-mailboxes">#mailboxes</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+      <!-- Included Modules -->
+      <div id="includes-section" class="section">
+        <h3 class="section-header">Included Modules</h3>
+        <ul class="link-list">
+        
+        
+          <li><span class="include">Enumerable</span></li>
+        
+        
+        </ul>
+      </div>
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="./COPYING.html">COPYING</a></li>
+        
+          <li class="file"><a href="./ChangeLog.html">ChangeLog</a></li>
+        
+          <li class="file"><a href="./README.html">README</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="./images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="./IMAPGet.html">IMAPGet</a></li>
+        
+          <li><a href="./IMAPGet/Version.html">IMAPGet::Version</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="class">IMAPGet</h1>
+
+    <div id="description" class="description">
+      
+    </div><!-- description -->
+
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+      <!-- Constants -->
+      <div id="constants-list" class="section">
+        <h3 class="section-header">Constants</h3>
+        <dl>
+        
+          <dt><a name="DEFAULT_DELIM">DEFAULT_DELIM</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+          <dt><a name="DEFAULT_LEVEL">DEFAULT_LEVEL</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+          <dt><a name="DEFAULT_STRATEGY">DEFAULT_STRATEGY</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+          <dt><a name="FETCH_ATTR">FETCH_ATTR</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+          <dt><a name="FETCH_SIZE">FETCH_SIZE</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+          <dt><a name="STRATEGIES">STRATEGIES</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+          <dt><a name="VERSION">VERSION</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+        </dl>
+      </div>
+      
+
+      
+      <!-- Attributes -->
+      <div id="attribute-method-details" class="method-section section">
+        <h3 class="section-header">Attributes</h3>
+
+        
+        <div id="excl-attribute-method" class="method-detail">
+          <a name="excl"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">excl</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="imap-attribute-method" class="method-detail">
+          <a name="imap"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">imap</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="incl-attribute-method" class="method-detail">
+          <a name="incl"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">incl</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="log_level-attribute-method" class="method-detail">
+          <a name="log_level"></a>
+          
+          <a name="log_level="></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">log_level</span><span
+              class="attribute-access-type">[RW]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+        <div id="strategy-attribute-method" class="method-detail">
+          <a name="strategy"></a>
+          
+          <div class="method-heading attribute-method-heading">
+            <span class="method-name">strategy</span><span
+              class="attribute-access-type">[R]</span>
+          </div>
+
+          <div class="method-description">
+          
+          
+          
+          </div>
+        </div>
+        
+      </div><!-- attribute-method-details -->
+      
+
+      <!-- Methods -->
+      
+      <div id="public-class-method-details" class="method-section section">
+        <h3 class="section-header">Public Class Methods</h3>
+
+      
+        <div id="new-method" class="method-detail ">
+          <a name="method-c-new"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">new</span><span
+              class="method-args">(options)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="new-source">
+<pre>
+<span class="ruby-comment"># File lib/imapget.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-ivar">@log_level</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:log_level</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">DEFAULT_LEVEL</span>
+
+  <span class="ruby-identifier">init_imap</span>    <span class="ruby-identifier">options</span>
+  <span class="ruby-identifier">authenticate</span> <span class="ruby-identifier">options</span>
+  <span class="ruby-identifier">inclexcl</span>     <span class="ruby-identifier">options</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- new-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- new-method -->
+
+      
+      </div><!-- public-class-method-details -->
+    
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="download-method" class="method-detail method-alias">
+          <a name="method-i-download"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">download</span><span
+              class="method-args">(path)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+          </div>
+
+          
+
+          
+          <div class="aliases">
+            Alias for: <a href="IMAPGet.html#method-i-get">get</a>
+          </div>
+          
+        </div><!-- download-method -->
+
+      
+        <div id="each-method" class="method-detail ">
+          <a name="method-i-each"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">each</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="each-source">
+<pre>
+<span class="ruby-comment"># File lib/imapget.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">each</span>
+  <span class="ruby-identifier">mailboxes</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">mailbox</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">name</span> = <span class="ruby-identifier">mailbox</span>.<span class="ruby-identifier">name</span>
+
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">strategy</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-value">:include</span>
+        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> (<span class="ruby-identifier">excl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">excl</span>) <span class="ruby-operator">||</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">incl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">incl</span>)
+      <span class="ruby-keyword">when</span> <span class="ruby-value">:exclude</span>
+        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> (<span class="ruby-identifier">excl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">excl</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">incl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">incl</span>)
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">mailbox</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">mailbox</span>)
+  }
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- each-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- each-method -->
+
+      
+        <div id="exclude-3F-method" class="method-detail ">
+          <a name="method-i-exclude-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">exclude?</span><span
+              class="method-args">(mailbox_or_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="exclude-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/imapget.rb, line 101</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">exclude?</span>(<span class="ruby-identifier">mailbox_or_name</span>)
+  <span class="ruby-identifier">name</span> = <span class="ruby-keyword">case</span> <span class="ruby-identifier">mailbox_or_name</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">IMAP</span><span class="ruby-operator">::</span><span class="ruby-constant">MailboxList</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">mailbox_or_name</span>.<span class="ruby-identifier">name</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span>                 <span class="ruby-keyword">then</span> <span class="ruby-identifier">mailbox_or_name</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;MailboxList or String expected, got #{mailbox_or_name.class}&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">strategy</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:include</span>
+      (<span class="ruby-identifier">excl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">excl</span>) <span class="ruby-operator">||</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">incl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">incl</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:exclude</span>
+      (<span class="ruby-identifier">excl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">excl</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">incl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">incl</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- exclude-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- exclude-3F-method -->
+
+      
+        <div id="get-method" class="method-detail ">
+          <a name="method-i-get"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">get</span><span
+              class="method-args">(path)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="get-source">
+<pre>
+<span class="ruby-comment"># File lib/imapget.rb, line 117</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">mailbox</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">name</span>   = <span class="ruby-identifier">mailbox</span>.<span class="ruby-identifier">name</span>
+    <span class="ruby-identifier">dir</span>    = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">path</span>, <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">IMAP</span>.<span class="ruby-identifier">decode_utf7</span>(<span class="ruby-identifier">name</span>))
+    <span class="ruby-identifier">update</span> = <span class="ruby-identifier">check_dir</span>(<span class="ruby-identifier">dir</span>)
+
+    <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;#{'=' * 10} #{name} #{'=' * 10}&quot;</span>
+    <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">examine</span>(<span class="ruby-identifier">name</span>)
+
+    <span class="ruby-identifier">uids</span> = <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">uid_search</span>(<span class="ruby-node">&quot;SINCE #{update.strftime('%d-%b-%Y')}&quot;</span>)
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">uids</span>.<span class="ruby-identifier">empty?</span>
+
+    <span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">uids</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">mail</span>, <span class="ruby-identifier">uid</span>, <span class="ruby-identifier">flags</span>, <span class="ruby-identifier">date</span>, <span class="ruby-identifier">body</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">file</span>    = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">uid</span>.<span class="ruby-identifier">to_s</span>)
+      <span class="ruby-identifier">exists</span>  = <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">file</span>)
+      <span class="ruby-identifier">deleted</span> = <span class="ruby-identifier">flags</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">IMAP</span><span class="ruby-operator">::</span><span class="ruby-constant">DELETED</span>)
+
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">deleted</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">exists</span>
+          <span class="ruby-identifier">info</span> <span class="ruby-node">&quot;#{dir}: #{name} &lt;- #{uid}&quot;</span>
+          <span class="ruby-constant">File</span>.<span class="ruby-identifier">unlink</span>(<span class="ruby-identifier">file</span>)
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">exists</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">file</span>) <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">date</span>
+          <span class="ruby-identifier">info</span> <span class="ruby-node">&quot;#{dir}: #{name} -&gt; #{uid}&quot;</span>
+          <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-string">'w'</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">body</span> }
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    }
+  }
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- get-source -->
+            
+          </div>
+
+          
+          <div class="aliases">
+            Also aliased as: <a href="IMAPGet.html#method-i-download">download</a>
+          </div>
+          
+
+          
+        </div><!-- get-method -->
+
+      
+        <div id="inclexcl-method" class="method-detail ">
+          <a name="method-i-inclexcl"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">inclexcl</span><span
+              class="method-args">(options)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="inclexcl-source">
+<pre>
+<span class="ruby-comment"># File lib/imapget.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">inclexcl</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-identifier">inclexcl</span> = {}
+
+  <span class="ruby-identifier">delim</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value">:delim</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">DEFAULT_DELIM</span>)
+
+  <span class="ruby-constant">STRATEGIES</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">inclexcl</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-keyword">case</span> <span class="ruby-identifier">value</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">key</span>]
+      <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span>
+        <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">value</span>)
+      <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
+        <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">value</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+          <span class="ruby-node">&quot;\\A#{Regexp.escape(Net::IMAP.encode_utf7(v))}(?:#{delim}|\\z)&quot;</span>
+        }.<span class="ruby-identifier">join</span>(<span class="ruby-string">'|'</span>))
+    <span class="ruby-keyword">end</span>
+  }
+
+  <span class="ruby-ivar">@incl</span>, <span class="ruby-ivar">@excl</span> = <span class="ruby-identifier">inclexcl</span>.<span class="ruby-identifier">values_at</span>(<span class="ruby-value">:include</span>, <span class="ruby-value">:exclude</span>)
+  <span class="ruby-ivar">@strategy</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:strategy</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">DEFAULT_STRATEGY</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- inclexcl-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- inclexcl-method -->
+
+      
+        <div id="include-3F-method" class="method-detail ">
+          <a name="method-i-include-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">include?</span><span
+              class="method-args">(mailbox_or_name)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="include-3F-source">
+<pre>
+<span class="ruby-comment"># File lib/imapget.rb, line 97</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">include?</span>(<span class="ruby-identifier">mailbox_or_name</span>)
+  <span class="ruby-operator">!</span><span class="ruby-identifier">exclude?</span>(<span class="ruby-identifier">mailbox_or_name</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- include-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- include-3F-method -->
+
+      
+        <div id="mailboxes-method" class="method-detail ">
+          <a name="method-i-mailboxes"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">mailboxes</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="mailboxes-source">
+<pre>
+<span class="ruby-comment"># File lib/imapget.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">mailboxes</span>
+  <span class="ruby-ivar">@mailboxes</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">list</span>(<span class="ruby-string">''</span>, <span class="ruby-string">'*'</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- mailboxes-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- mailboxes-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+      <div id="private-instance-method-details" class="method-section section">
+        <h3 class="section-header">Private Instance Methods</h3>
+
+      
+        <div id="authenticate-method" class="method-detail ">
+          <a name="method-i-authenticate"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">authenticate</span><span
+              class="method-args">(options)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="authenticate-source">
+<pre>
+<span class="ruby-comment"># File lib/imapget.rb, line 163</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">authenticate</span>(
+    <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">capability</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">'AUTH=CRAM-MD5'</span>) <span class="ruby-operator">?</span> <span class="ruby-string">'CRAM-MD5'</span> <span class="ruby-operator">:</span> <span class="ruby-string">'LOGIN'</span>,
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:user</span>], <span class="ruby-identifier">options</span>[<span class="ruby-value">:password</span>]
+  )
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- authenticate-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- authenticate-method -->
+
+      
+        <div id="check_dir-method" class="method-detail ">
+          <a name="method-i-check_dir"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">check_dir</span><span
+              class="method-args">(dir)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="check_dir-source">
+<pre>
+<span class="ruby-comment"># File lib/imapget.rb, line 182</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_dir</span>(<span class="ruby-identifier">dir</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">dir</span>)
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">dir</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">dir</span>)
+    <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-value">0</span>)
+  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">utc</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- check_dir-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- check_dir-method -->
+
+      
+        <div id="fetch-method" class="method-detail ">
+          <a name="method-i-fetch"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">fetch</span><span
+              class="method-args">(uids, fetch_size = FETCH_SIZE, fetch_attr = FETCH_ATTR)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="fetch-source">
+<pre>
+<span class="ruby-comment"># File lib/imapget.rb, line 170</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">uids</span>, <span class="ruby-identifier">fetch_size</span> = <span class="ruby-constant">FETCH_SIZE</span>, <span class="ruby-identifier">fetch_attr</span> = <span class="ruby-constant">FETCH_ATTR</span>)
+  <span class="ruby-identifier">uids</span>.<span class="ruby-identifier">each_slice</span>(<span class="ruby-identifier">fetch_size</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">slice</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">uid_fetch</span>(<span class="ruby-identifier">slice</span>, <span class="ruby-identifier">fetch_attr</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">mail</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">yield</span> <span class="ruby-identifier">mail</span>, *[<span class="ruby-string">'UID'</span>, *<span class="ruby-identifier">fetch_attr</span>].<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">v</span> = <span class="ruby-identifier">mail</span>.<span class="ruby-identifier">attr</span>[<span class="ruby-identifier">a</span>]
+        <span class="ruby-identifier">v</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">v</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">a</span> <span class="ruby-operator">==</span> <span class="ruby-string">'INTERNALDATE'</span>
+        <span class="ruby-identifier">v</span>
+      }
+    }
+  }
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- fetch-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- fetch-method -->
+
+      
+        <div id="info-method" class="method-detail ">
+          <a name="method-i-info"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">info</span><span
+              class="method-args">(msg)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="info-source">
+<pre>
+<span class="ruby-comment"># File lib/imapget.rb, line 195</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">info</span>(<span class="ruby-identifier">msg</span>)
+  <span class="ruby-identifier">log</span>(<span class="ruby-identifier">msg</span>, <span class="ruby-value">2</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- info-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- info-method -->
+
+      
+        <div id="init_imap-method" class="method-detail ">
+          <a name="method-i-init_imap"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">init_imap</span><span
+              class="method-args">(options)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="init_imap-source">
+<pre>
+<span class="ruby-comment"># File lib/imapget.rb, line 153</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">init_imap</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-ivar">@imap</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">IMAP</span>.<span class="ruby-identifier">new</span>(
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:host</span>],
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:port</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">IMAP</span><span class="ruby-operator">::</span><span class="ruby-constant">PORT</span>,
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:use_ssl</span>],
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:certs</span>],
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:verify</span>]
+  )
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- init_imap-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- init_imap-method -->
+
+      
+        <div id="log-method" class="method-detail ">
+          <a name="method-i-log"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">log</span><span
+              class="method-args">(msg, level = 1)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="log-source">
+<pre>
+<span class="ruby-comment"># File lib/imapget.rb, line 191</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">log</span>(<span class="ruby-identifier">msg</span>, <span class="ruby-identifier">level</span> = <span class="ruby-value">1</span>)
+  <span class="ruby-identifier">warn</span> <span class="ruby-identifier">msg</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">log_level</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">level</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- log-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- log-method -->
+
+      
+      </div><!-- private-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+
