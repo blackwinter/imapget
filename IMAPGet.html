@@ -34,11 +34,11 @@
         <div class="section-body">
           <ul>
           
-            <li><a href="./lib/imapget_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
-              class="thickbox" title="lib/imapget.rb">lib/imapget.rb</a></li>
-          
             <li><a href="./lib/imapget/version_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
               class="thickbox" title="lib/imapget/version.rb">lib/imapget/version.rb</a></li>
+          
+            <li><a href="./lib/imapget_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/imapget.rb">lib/imapget.rb</a></li>
           
           </ul>
         </div>
@@ -176,6 +176,8 @@
       
     </div><!-- description -->
 
+    
+    
     
     <div id="5Buntitled-5D" class="documentation-section">
       
@@ -523,7 +525,7 @@
           <span class="ruby-constant">File</span>.<span class="ruby-identifier">unlink</span>(<span class="ruby-identifier">file</span>)
         <span class="ruby-keyword">end</span>
       <span class="ruby-keyword">else</span>
-        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">exists</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">file</span>) <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">date</span>
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">exists</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">date</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">file</span>) <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">date</span>
           <span class="ruby-identifier">info</span> <span class="ruby-node">&quot;#{dir}: #{name} -&gt; #{uid}&quot;</span>
           <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-string">'w'</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">body</span> }
         <span class="ruby-keyword">end</span>
@@ -765,7 +767,7 @@
     <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">uid_fetch</span>(<span class="ruby-identifier">slice</span>, <span class="ruby-identifier">fetch_attr</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">mail</span><span class="ruby-operator">|</span>
       <span class="ruby-keyword">yield</span> <span class="ruby-identifier">mail</span>, *[<span class="ruby-string">'UID'</span>, *<span class="ruby-identifier">fetch_attr</span>].<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
         <span class="ruby-identifier">v</span> = <span class="ruby-identifier">mail</span>.<span class="ruby-identifier">attr</span>[<span class="ruby-identifier">a</span>]
-        <span class="ruby-identifier">v</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">v</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">a</span> <span class="ruby-operator">==</span> <span class="ruby-string">'INTERNALDATE'</span>
+        <span class="ruby-identifier">v</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">v</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">a</span> <span class="ruby-operator">==</span> <span class="ruby-string">'INTERNALDATE'</span>
         <span class="ruby-identifier">v</span>
       }
     }
