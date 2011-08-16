@@ -137,7 +137,7 @@ class IMAPGet
             File.unlink(file)
           end
         else
-          unless exists && File.mtime(file) >= date
+          unless exists && date && File.mtime(file) >= date
             info "#{dir}: #{name} -> #{uid}"
             File.open(file, 'w') { |f| f.puts body }
           end
@@ -172,7 +172,7 @@ class IMAPGet
       imap.uid_fetch(slice, fetch_attr).each { |mail|
         yield mail, *['UID', *fetch_attr].map { |a|
           v = mail.attr[a]
-          v = Time.parse(v) if a == 'INTERNALDATE'
+          v = Time.parse(v) if v && a == 'INTERNALDATE'
           v
         }
       }
