@@ -4,15 +4,13 @@ begin
   require 'hen'
 
   Hen.lay! {{
-    :rubyforge => {
-      :project => %q{imapget}
-    },
-
     :gem => {
+      :name         => %q{imapget},
       :version      => IMAPGet::VERSION,
       :summary      => %q{Get IMAP mails.},
       :author       => %q{Jens Wille},
-      :email        => %q{jens.wille@uni-koeln.de},
+      :email        => %q{jens.wille@gmail.com},
+      :homepage     => :blackwinter,
       :dependencies => %w[highline]
     }
   }}

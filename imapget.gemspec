@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors = [%q{Jens Wille}]
   s.date = %q{2011-08-16}
   s.description = %q{Get IMAP mails.}
-  s.email = %q{jens.wille@uni-koeln.de}
+  s.email = %q{jens.wille@gmail.com}
   s.executables = [%q{imapget}]
   s.extra_rdoc_files = [%q{README}, %q{COPYING}, %q{ChangeLog}]
   s.files = [%q{lib/imapget/version.rb}, %q{lib/imapget.rb}, %q{bin/imapget}, %q{README}, %q{ChangeLog}, %q{COPYING}, %q{Rakefile}, %q{example/config.yaml}]
