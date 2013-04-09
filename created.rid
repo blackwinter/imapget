@@ -1,6 +1,6 @@
-Tue, 16 Aug 2011 20:57:00 +0200
-README	Tue, 16 Aug 2011 20:44:43 +0200
-COPYING	Fri, 29 Apr 2011 19:08:45 +0200
-ChangeLog	Wed, 20 May 2009 11:38:29 +0200
-lib/imapget/version.rb	Tue, 16 Aug 2011 20:44:50 +0200
-lib/imapget.rb	Tue, 16 Aug 2011 20:41:34 +0200
+Tue, 09 Apr 2013 12:15:49 +0200
+README	Tue, 09 Apr 2013 12:14:31 +0200
+COPYING	Tue, 09 Apr 2013 11:32:58 +0200
+ChangeLog	Tue, 09 Apr 2013 11:32:58 +0200
+lib/imapget.rb	Tue, 09 Apr 2013 12:15:24 +0200
+lib/imapget/version.rb	Tue, 09 Apr 2013 11:32:58 +0200
