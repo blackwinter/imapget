@@ -10,6 +10,7 @@ begin
       :summary      => %q{Get IMAP mails.},
       :author       => %q{Jens Wille},
       :email        => %q{jens.wille@gmail.com},
+      :license      => %q{AGPL},
       :homepage     => :blackwinter,
       :dependencies => %w[highline]
     }
