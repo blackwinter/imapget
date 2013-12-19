@@ -1,22 +1,23 @@
 # -*- encoding: utf-8 -*-
+# stub: imapget 0.0.8 ruby lib
 
 Gem::Specification.new do |s|
   s.name = "imapget"
-  s.version = "0.0.7"
+  s.version = "0.0.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jens Wille"]
-  s.date = "2013-07-15"
+  s.date = "2013-12-19"
   s.description = "Get IMAP mails."
   s.email = "jens.wille@gmail.com"
   s.executables = ["imapget"]
   s.extra_rdoc_files = ["README", "COPYING", "ChangeLog"]
   s.files = ["lib/imapget.rb", "lib/imapget/version.rb", "bin/imapget", "COPYING", "ChangeLog", "README", "Rakefile", "example/config.yaml"]
   s.homepage = "http://github.com/blackwinter/imapget"
-  s.licenses = ["AGPL"]
-  s.rdoc_options = ["--charset", "UTF-8", "--line-numbers", "--all", "--title", "imapget Application documentation (v0.0.7)", "--main", "README"]
+  s.licenses = ["AGPL-3.0"]
+  s.rdoc_options = ["--title", "imapget Application documentation (v0.0.8)", "--charset", "UTF-8", "--line-numbers", "--all", "--main", "README"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "2.0.5"
+  s.rubygems_version = "2.1.11"
   s.summary = "Get IMAP mails."
 
   if s.respond_to? :specification_version then
