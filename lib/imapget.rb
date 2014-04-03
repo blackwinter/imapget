@@ -3,7 +3,7 @@
 #                                                                             #
 # imapget -- Download IMAP mails                                              #
 #                                                                             #
-# Copyright (C) 2009-2013 Jens Wille                                          #
+# Copyright (C) 2009-2014 Jens Wille                                          #
 #                                                                             #
 # Authors:                                                                    #
 #     Jens Wille <jens.wille@gmail.com>                                       #
@@ -27,165 +27,132 @@
 require 'time'
 require 'net/imap'
 require 'fileutils'
-require 'enumerator' unless [].respond_to?(:each_slice)
 
-require 'imapget/version'
+require_relative 'imapget/version'
 
 class IMAPGet
 
   include Enumerable
 
-  STRATEGIES       = [:include, :exclude]
-  DEFAULT_STRATEGY = :exclude
-
-  DEFAULT_LEVEL = 2
-  DEFAULT_DELIM = '/'
+  DEFAULT_BATCH_SIZE = 100
+  DEFAULT_STRATEGY   = :exclude
+  DEFAULT_LOG_LEVEL  = 2
+  DEFAULT_DELIMITER  = '/'
 
   FETCH_ATTR = %w[FLAGS INTERNALDATE RFC822]
-  FETCH_SIZE = 100
 
   attr_reader   :imap, :strategy, :incl, :excl
-  attr_accessor :log_level
+  attr_accessor :batch_size, :log_level
 
   def initialize(options)
-    @log_level = options[:log_level] || DEFAULT_LEVEL
+    @batch_size = options.fetch(:batch_size, DEFAULT_BATCH_SIZE)
+    @log_level  = options.fetch(:log_level,  DEFAULT_LOG_LEVEL)
 
-    init_imap    options
-    authenticate options
-    inclexcl     options
+    @imap = Net::IMAP.new(options[:host], options)
+    @imap.starttls(options[:starttls]) if options[:starttls]
+
+    authenticate(options)
+    inclexcl(options)
   end
 
   def inclexcl(options)
-    inclexcl = {}
+    delim = Regexp.escape(options.fetch(:delim, DEFAULT_DELIMITER))
 
-    delim = Regexp.escape(options[:delim] || DEFAULT_DELIM)
-
-    STRATEGIES.each { |key|
-      inclexcl[key] = case value = options[key]
-        when String
-          Regexp.new(value)
-        when Array
-          Regexp.new(value.map { |v|
-            "\\A#{Regexp.escape(Net::IMAP.encode_utf7(v))}(?:#{delim}|\\z)"
-          }.join('|'))
-      end
+    %w[include exclude].each { |key|
+      instance_variable_set("@#{key[0, 4]}", case value = options[key.to_sym]
+        when String then Regexp.new(value)
+        when Array  then Regexp.new(value.map { |v|
+          "\\A#{Regexp.escape(Net::IMAP.encode_utf7(v))}(?:#{delim}|\\z)"
+        }.join('|'))
+      end)
     }
 
-    @incl, @excl = inclexcl.values_at(:include, :exclude)
-    @strategy = options[:strategy] || DEFAULT_STRATEGY
+    @strategy = options.fetch(:strategy, DEFAULT_STRATEGY)
   end
 
   def mailboxes
-    @mailboxes ||= imap.list('', '*')
+    @mailboxes ||= imap.list('', '*').sort
   end
 
   def each
-    mailboxes.each { |mailbox|
-      name = mailbox.name
-
-      case strategy
-        when :include
-          next if (excl && name =~ excl) || !(incl && name =~ incl)
-        when :exclude
-          next if (excl && name =~ excl) && !(incl && name =~ incl)
-      end
-
-      yield mailbox if self.include?(mailbox)
-    }
+    mailboxes.each { |mailbox| yield mailbox if include?(mailbox) }
   end
 
-  def include?(mailbox_or_name)
-    !exclude?(mailbox_or_name)
+  def include?(mailbox)
+    !exclude?(mailbox)
   end
 
-  def exclude?(mailbox_or_name)
-    name = case mailbox_or_name
-      when Net::IMAP::MailboxList then mailbox_or_name.name
-      when String                 then mailbox_or_name
-      else
-        raise TypeError, "MailboxList or String expected, got #{mailbox_or_name.class}"
+  def exclude?(mailbox)
+    name = case mailbox
+      when String                 then mailbox
+      when Net::IMAP::MailboxList then mailbox.name
+      else raise TypeError, "MailboxList or String expected, got #{mailbox.class}"
     end
 
     case strategy
-      when :include
-        (excl && name =~ excl) || !(incl && name =~ incl)
-      when :exclude
-        (excl && name =~ excl) && !(incl && name =~ incl)
+      when :include then (excl && name =~ excl) || !(incl && name =~ incl)
+      when :exclude then (excl && name =~ excl) && !(incl && name =~ incl)
     end
   end
 
-  def get(path)
-    each { |mailbox|
-      name   = mailbox.name
-      dir    = File.join(path, Net::IMAP.decode_utf7(name))
-      update = check_dir(dir)
-
-      log "#{'=' * 10} #{name} #{'=' * 10}"
-      imap.examine(name)
-
-      uids = imap.uid_search("SINCE #{update.strftime('%d-%b-%Y')}")
-      next if uids.empty?
-
-      fetch(uids) { |mail, uid, flags, date, body|
-        file    = File.join(dir, uid.to_s)
-        exists  = File.exists?(file)
-        deleted = flags.include?(Net::IMAP::DELETED)
-
-        if deleted
-          if exists
-            info "#{dir}: #{name} <- #{uid}"
-            File.unlink(file)
-          end
-        else
-          unless exists && date && File.mtime(file) >= date
-            info "#{dir}: #{name} -> #{uid}"
-            File.open(file, 'w') { |f| f.puts body }
-          end
-        end
-      }
-    }
+  def get(dir)
+    each { |mailbox| get_name(name = mailbox.name,
+      File.join(dir, Net::IMAP.decode_utf7(name))) }
   end
 
   alias_method :download, :get
 
+  def get_name(name, dir)
+    log "#{'=' * 10} #{name} #{'=' * 10}"
+
+    imap.examine(name)
+
+    uid_fetch("SINCE #{mtime(dir)}") { |mail| fetch(mail, dir, name) }
+  end
+
+  alias_method :download_name, :get_name
+
   private
 
-  def init_imap(options)
-    @imap = Net::IMAP.new(
-      options[:host],
-      options[:port] || Net::IMAP::PORT,
-      options[:use_ssl],
-      options[:certs],
-      options[:verify]
-    )
-  end
-
   def authenticate(options)
-    imap.authenticate(
-      imap.capability.include?('AUTH=CRAM-MD5') ? 'CRAM-MD5' : 'LOGIN',
-      options[:user], options[:password]
-    )
+    if auth = options.fetch(:auth) {
+      imap.capability.grep(/\AAUTH=(.*)/) { $1 }.first
+    }
+      imap.authenticate(auth, options[:user], options[:password])
+    else
+      imap.login(options[:user], options[:password])
+    end
   end
 
-  def fetch(uids, fetch_size = FETCH_SIZE, fetch_attr = FETCH_ATTR)
-    uids.each_slice(fetch_size) { |slice|
-      imap.uid_fetch(slice, fetch_attr).each { |mail|
-        yield mail, *['UID', *fetch_attr].map { |a|
-          v = mail.attr[a]
-          v = Time.parse(v) if v && a == 'INTERNALDATE'
-          v
-        }
-      }
+  def uid_fetch(key, batch_size = batch_size, fetch_attr = FETCH_ATTR, &block)
+    imap.uid_search(key).each_slice(batch_size) { |slice|
+      imap.uid_fetch(slice, fetch_attr).each(&block)
     }
   end
 
-  def check_dir(dir)
-    if File.directory?(dir)
-      File.mtime(dir)
+  def fetch(mail, dir, name)
+    uid    = mail.attr['UID'].to_s
+    file   = File.join(dir, uid)
+    exists = File.exists?(file)
+
+    if mail.attr['FLAGS'].include?(Net::IMAP::DELETED)
+      if exists
+        info "#{dir}: #{name} <- #{uid}"
+        File.unlink(file)
+      end
     else
-      FileUtils.mkdir_p(dir)
-      Time.at(0)
-    end.utc
+      date = mail.attr['INTERNALDATE']
+
+      unless exists && date && File.mtime(file) >= Time.parse(date)
+        info "#{dir}: #{name} -> #{uid}"
+        File.write(file, mail.attr['RFC822'])
+      end
+    end
+  end
+
+  def mtime(dir)
+    Net::IMAP.format_date((File.directory?(dir) ?
+      File.mtime(dir) : (FileUtils.mkdir_p(dir); Time.at(0))).utc)
   end
 
   def log(msg, level = 1)

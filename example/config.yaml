@@ -8,10 +8,10 @@
 
 # Get all mailboxes (via SSL), *except* Spam and Trash.
 you-1:
-  :host:    imap.example.com
-  :port:    123
-  :use_ssl: true
-  :user:    login
+  :host: imap.example.com
+  :port: 123
+  :ssl:  true
+  :user: login
   :exclude:
     - Spam
     - Trash

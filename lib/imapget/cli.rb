@@ -1,5 +1,3 @@
-#! /usr/bin/env ruby
-
 #--
 ###############################################################################
 #                                                                             #
@@ -26,5 +24,79 @@
 ###############################################################################
 #++
 
-require 'imapget/cli'
-IMAPGet::CLI.execute
+require 'nuggets/cli'
+
+require 'imapget'
+
+class IMAPGet
+
+  class CLI < Nuggets::CLI
+
+    class << self
+
+      def defaults
+        super.merge(
+          config:    'config.yaml',
+          directory: nil,
+          check:     false
+        )
+      end
+
+    end
+
+    def usage
+      "#{super} [profile]..."
+    end
+
+    def run(arguments)
+      profiles, default_config = config.partition { |k,| k.is_a?(String) }
+
+      (arguments.empty? ? profiles.map(&:first) : arguments).each { |profile|
+        unless profile_config = profiles.assoc(profile)
+          warn "No such profile: #{profile}"
+          next
+        end
+
+        profile_config = profile_config.last
+        default_config.each { |key, value| profile_config[key] ||= value }
+
+        next if profile_config[:skip]
+
+        unless host = profile_config[:host]
+          warn "No host for profile: #{profile}"
+          next
+        end
+
+        profile_config[:user]     ||= ask("User for #{profile} on #{host}: ")
+        profile_config[:password] ||= askpass("Password for #{profile_config[:user]}@#{host}: ")
+
+        imapget = IMAPGet.new(profile_config)
+
+        if options[:check]
+          imapget.each { |mailbox| puts mailbox.name }
+        else
+          imapget.get(options[:directory] || File.join(profile_config[:base_dir] || '.', profile))
+        end
+      }
+    end
+
+    private
+
+    def merge_config(*)
+    end
+
+    def opts(opts)
+      opts.on('-d', '--directory PATH', "Path to directory to store mails in [Default: BASE_DIR/<profile>]") { |d|
+        options[:directory] = d
+      }
+
+      opts.separator ''
+
+      opts.on('-C', '--check', "Only check include/exclude statements; don't download any mails") {
+        options[:check] = true
+      }
+    end
+
+  end
+
+end
