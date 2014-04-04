@@ -38,7 +38,9 @@ class IMAPGet
         super.merge(
           config:    'config.yaml',
           directory: nil,
-          check:     false
+          check:     false,
+          dupe:      false,
+          uniq:      false
         )
       end
 
@@ -52,30 +54,21 @@ class IMAPGet
       profiles, default_config = config.partition { |k,| k.is_a?(String) }
 
       (arguments.empty? ? profiles.map(&:first) : arguments).each { |profile|
-        unless profile_config = profiles.assoc(profile)
-          warn "No such profile: #{profile}"
-          next
-        end
-
-        profile_config = profile_config.last
-        default_config.each { |key, value| profile_config[key] ||= value }
-
-        next if profile_config[:skip]
-
-        unless host = profile_config[:host]
-          warn "No host for profile: #{profile}"
-          next
-        end
-
-        profile_config[:user]     ||= ask("User for #{profile} on #{host}: ")
-        profile_config[:password] ||= askpass("Password for #{profile_config[:user]}@#{host}: ")
+        next unless profile_config = profile_config(profiles.assoc(profile))
 
         imapget = IMAPGet.new(profile_config)
 
         if options[:check]
           imapget.each { |mailbox| puts mailbox.name }
+        elsif options[:dupe]
+          imapget.each { |mailbox| imapget.dupes(mailbox.name) }
+        elsif options[:uniq]
+          imapget.each { |mailbox| imapget.uniq!(mailbox.name) {
+            next unless agree('Really delete duplicates? ')
+          } }
         else
-          imapget.get(options[:directory] || File.join(profile_config[:base_dir] || '.', profile))
+          imapget.get(options[:directory] ||
+            File.join(profile_config[:base_dir] || '.', profile))
         end
       }
     end
@@ -95,6 +88,36 @@ class IMAPGet
       opts.on('-C', '--check', "Only check include/exclude statements; don't download any mails") {
         options[:check] = true
       }
+
+      opts.on('-D', '--dupes', "Only check for duplicate mails; don't download any mails") {
+        options[:dupe] = true
+      }
+
+      opts.on('-U', '--uniq', "Only delete duplicate mails; don't download any mails") {
+        options[:uniq] = true
+      }
+    end
+
+    def profile_config(profile, profiles, default_config)
+      unless config = profiles.assoc(profile)
+        "No such profile: #{profile}"
+        return
+      end
+
+      config = config.last
+      default_config.each { |key, value| config[key] ||= value }
+
+      return if config[:skip]
+
+      unless host = config[:host]
+        warn "No host for profile: #{profile}"
+        return
+      end
+
+      config[:user]     ||= ask("User for #{profile} on #{host}: ")
+      config[:password] ||= askpass("Password for #{config[:user]}@#{host}: ")
+
+      config
     end
 
   end

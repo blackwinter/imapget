@@ -107,10 +107,53 @@ class IMAPGet
 
     imap.examine(name)
 
-    uid_fetch("SINCE #{mtime(dir)}") { |mail| fetch(mail, dir, name) }
+    imap.uid_search("SINCE #{mtime(dir)}").each_slice(batch_size) { |batch|
+      fetch_batch(batch) { |mail| fetch(mail, dir, name) }
+    }
   end
 
   alias_method :download_name, :get_name
+
+  def size(name, attr = 'MESSAGES')
+    imap.status(name, [attr]).values.first
+  end
+
+  def dupes(name, quiet = false)
+    imap.examine(name)
+
+    hash = Hash.new { |h, k| h[k] = [] }
+
+    1.step(size(name), step = batch_size) { |i|
+      fetch_batch([[i, step]]) { |mail|
+        hash[mail.attr['RFC822']] << mail.attr['UID'] unless deleted?(mail)
+      }
+    }
+
+    dupes = hash.flat_map { |_, uids| uids.drop(1) if uids.size > 1 }.compact
+
+    log "#{name}: #{dupes.size}" unless quiet
+
+    dupes
+  end
+
+  def delete!(name, uids)
+    unless uids.empty?
+      log "#{name}: #{uids.size}"
+
+      yield if block_given?
+
+      imap.select(name)
+      count = imap.store(uids, '+FLAGS', [Net::IMAP::DELETED]).size
+
+      log "#{count} DELETED!"
+
+      count
+    end
+  end
+
+  def uniq!(name)
+    delete!(name, dupes(name, true))
+  end
 
   private
 
@@ -124,10 +167,17 @@ class IMAPGet
     end
   end
 
-  def uid_fetch(key, batch_size = batch_size, fetch_attr = FETCH_ATTR, &block)
-    imap.uid_search(key).each_slice(batch_size) { |slice|
-      imap.uid_fetch(slice, fetch_attr).each(&block)
-    }
+  def fetch_batch(batch, fetch_attr = FETCH_ATTR, &block)
+    if batch.size == 1
+      case set = batch.first
+        when Array
+          batch = set.first .. (set.first + set.last - 1)
+        when Range
+          batch = set.first .. (set.last - 1) if set.exclude_end?
+      end
+    end
+
+    imap.uid_fetch(batch, fetch_attr).each(&block)
   end
 
   def fetch(mail, dir, name)
@@ -135,7 +185,7 @@ class IMAPGet
     file   = File.join(dir, uid)
     exists = File.exists?(file)
 
-    if mail.attr['FLAGS'].include?(Net::IMAP::DELETED)
+    if deleted?(mail)
       if exists
         info "#{dir}: #{name} <- #{uid}"
         File.unlink(file)
@@ -148,6 +198,10 @@ class IMAPGet
         File.write(file, mail.attr['RFC822'])
       end
     end
+  end
+
+  def deleted?(mail)
+    mail.attr['FLAGS'].include?(Net::IMAP::DELETED)
   end
 
   def mtime(dir)
