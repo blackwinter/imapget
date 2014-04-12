@@ -71,7 +71,7 @@ class IMAPGet
   end
 
   def mailboxes
-    @mailboxes ||= imap.list('', '*').sort
+    @mailboxes ||= imap.list('', '*').sort_by(&:name)
   end
 
   def each
