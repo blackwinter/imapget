@@ -151,8 +151,8 @@ class IMAPGet
     end
   end
 
-  def uniq!(name)
-    delete!(name, dupes(name, true))
+  def uniq!(name, &block)
+    delete!(name, dupes(name, true), &block)
   end
 
   private
