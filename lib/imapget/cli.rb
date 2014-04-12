@@ -24,13 +24,12 @@
 ###############################################################################
 #++
 
-require 'nuggets/cli'
-
+require 'cyclops'
 require 'imapget'
 
 class IMAPGet
 
-  class CLI < Nuggets::CLI
+  class CLI < Cyclops
 
     class << self
 
@@ -54,13 +53,13 @@ class IMAPGet
       profiles, default_config = config.partition { |k,| k.is_a?(String) }
 
       (arguments.empty? ? profiles.map(&:first) : arguments).each { |profile|
-        next unless profile_config = profile_config(profiles.assoc(profile))
+        profile_config = profile_config(profile, profiles, default_config) or next
 
         imapget = IMAPGet.new(profile_config)
 
         if options[:check]
           imapget.each { |mailbox| puts mailbox.name }
-        elsif options[:dupe]
+        elsif options[:dupes]
           imapget.each { |mailbox| imapget.dupes(mailbox.name) }
         elsif options[:uniq]
           imapget.each { |mailbox| imapget.uniq!(mailbox.name) {
@@ -79,28 +78,20 @@ class IMAPGet
     end
 
     def opts(opts)
-      opts.on('-d', '--directory PATH', "Path to directory to store mails in [Default: BASE_DIR/<profile>]") { |d|
-        options[:directory] = d
-      }
+      opts.option(:directory__PATH, 'Path to directory to store mails in [Default: BASE_DIR/<profile>]')
 
-      opts.separator ''
+      opts.separator
 
-      opts.on('-C', '--check', "Only check include/exclude statements; don't download any mails") {
-        options[:check] = true
-      }
+      opts.switch(:check, :C, "Only check include/exclude statements; don't download any mails")
 
-      opts.on('-D', '--dupes', "Only check for duplicate mails; don't download any mails") {
-        options[:dupe] = true
-      }
+      opts.switch(:dupes, :D, "Only check for duplicate mails; don't download any mails")
 
-      opts.on('-U', '--uniq', "Only delete duplicate mails; don't download any mails") {
-        options[:uniq] = true
-      }
+      opts.switch(:uniq, :U, "Only delete duplicate mails; don't download any mails")
     end
 
     def profile_config(profile, profiles, default_config)
       unless config = profiles.assoc(profile)
-        "No such profile: #{profile}"
+        warn "No such profile: #{profile}"
         return
       end
 
