@@ -2,51 +2,51 @@
 
 <html>
 <head>
-<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta charset="UTF-8">
 
-<title>Table of Contents - imapget Application documentation (v0.0.8)</title>
+<title>Table of Contents - imapget Application documentation (v0.1.0)</title>
 
-<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+<link href="./fonts.css" rel="stylesheet">
+<link href="./rdoc.css" rel="stylesheet">
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
-<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
-<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+<script src="./js/jquery.js"></script>
+<script src="./js/navigation.js"></script>
+<script src="./js/search_index.js"></script>
+<script src="./js/search.js"></script>
+<script src="./js/searcher.js"></script>
+<script src="./js/darkfish.js"></script>
 
 
-<body class="indexpage">
-<h1>Table of Contents - imapget Application documentation (v0.0.8)</h1>
+<body id="top" class="table-of-contents">
+<main role="main">
+<h1 class="class">Table of Contents - imapget Application documentation (v0.1.0)</h1>
 
-<h2>Pages</h2>
+<h2 id="pages">Pages</h2>
 <ul>
   <li class="file">
     <a href="COPYING.html">COPYING</a>
 
-    <img class="toc-toggle" src="images/transparent.png" alt="" title="toggle headings">
-    <ul class="initially-hidden">
+    <ul>
       <li><a href="COPYING.html#label-License+for+imapget">License for imapget</a>
     </ul>
   </li>
     <li class="file">
     <a href="ChangeLog.html">ChangeLog</a>
 
-    <img class="toc-toggle" src="images/transparent.png" alt="" title="toggle headings">
-    <ul class="initially-hidden">
+    <ul>
       <li><a href="ChangeLog.html#label-Revision+history+for+imapget">Revision history for imapget</a>
+      <li><a href="ChangeLog.html#label-0.1.0+%5B2014-04-14%5D">0.1.0 [2014-04-14]</a>
       <li><a href="ChangeLog.html#label-0.0.1+%5B2009-05-20%5D">0.0.1 [2009-05-20]</a>
     </ul>
   </li>
     <li class="file">
     <a href="README.html">README</a>
 
-    <img class="toc-toggle" src="images/transparent.png" alt="" title="toggle headings">
-    <ul class="initially-hidden">
+    <ul>
       <li><a href="README.html#label-imapget+-+Get+IMAP+mails.">imapget - Get IMAP mails.</a>
       <li><a href="README.html#label-VERSION">VERSION</a>
       <li><a href="README.html#label-DESCRIPTION">DESCRIPTION</a>
@@ -58,58 +58,173 @@
   
 </ul>
 
-<h2 id="classes">Classes/Modules</h2>
+<h2 id="classes">Classes and Modules</h2>
 <ul>
   <li class="class">
     <a href="IMAPGet.html">IMAPGet</a>
   </li>
-    <li class="module">
+  <li class="class">
+    <a href="IMAPGet/CLI.html">IMAPGet::CLI</a>
+  </li>
+  <li class="module">
     <a href="IMAPGet/Version.html">IMAPGet::Version</a>
   </li>
-  
 </ul>
 
 <h2 id="methods">Methods</h2>
 <ul>
-  
-    <li class="method"><a href="IMAPGet.html#method-c-new">::new &mdash; IMAPGet</a>
-  
-    <li class="method"><a href="IMAPGet/Version.html#method-c-to_a">::to_a &mdash; IMAPGet::Version</a>
-  
-    <li class="method"><a href="IMAPGet/Version.html#method-c-to_s">::to_s &mdash; IMAPGet::Version</a>
-  
-    <li class="method"><a href="IMAPGet.html#method-i-authenticate">#authenticate &mdash; IMAPGet</a>
-  
-    <li class="method"><a href="IMAPGet.html#method-i-check_dir">#check_dir &mdash; IMAPGet</a>
-  
-    <li class="method"><a href="IMAPGet.html#method-i-download">#download &mdash; IMAPGet</a>
-  
-    <li class="method"><a href="IMAPGet.html#method-i-each">#each &mdash; IMAPGet</a>
-  
-    <li class="method"><a href="IMAPGet.html#method-i-exclude-3F">#exclude? &mdash; IMAPGet</a>
-  
-    <li class="method"><a href="IMAPGet.html#method-i-fetch">#fetch &mdash; IMAPGet</a>
-  
-    <li class="method"><a href="IMAPGet.html#method-i-get">#get &mdash; IMAPGet</a>
-  
-    <li class="method"><a href="IMAPGet.html#method-i-inclexcl">#inclexcl &mdash; IMAPGet</a>
-  
-    <li class="method"><a href="IMAPGet.html#method-i-include-3F">#include? &mdash; IMAPGet</a>
-  
-    <li class="method"><a href="IMAPGet.html#method-i-info">#info &mdash; IMAPGet</a>
-  
-    <li class="method"><a href="IMAPGet.html#method-i-init_imap">#init_imap &mdash; IMAPGet</a>
-  
-    <li class="method"><a href="IMAPGet.html#method-i-log">#log &mdash; IMAPGet</a>
-  
-    <li class="method"><a href="IMAPGet.html#method-i-mailboxes">#mailboxes &mdash; IMAPGet</a>
-  
+
+  <li class="method">
+    <a href="IMAPGet.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-authenticate">#authenticate</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet/CLI.html#method-i-defaults">#defaults</a>
+    &mdash;
+    <span class="container">IMAPGet::CLI</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-delete-21">#delete!</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-deleted-3F">#deleted?</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-download">#download</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-download_name">#download_name</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-dupes">#dupes</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-each">#each</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-exclude-3F">#exclude?</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-fetch">#fetch</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-fetch_batch">#fetch_batch</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-get">#get</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-get_name">#get_name</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-inclexcl">#inclexcl</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-include-3F">#include?</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-info">#info</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-log">#log</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-mailboxes">#mailboxes</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet/CLI.html#method-i-merge_config">#merge_config</a>
+    &mdash;
+    <span class="container">IMAPGet::CLI</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-mtime">#mtime</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet/CLI.html#method-i-opts">#opts</a>
+    &mdash;
+    <span class="container">IMAPGet::CLI</span>
+
+  <li class="method">
+    <a href="IMAPGet/CLI.html#method-i-profile_config">#profile_config</a>
+    &mdash;
+    <span class="container">IMAPGet::CLI</span>
+
+  <li class="method">
+    <a href="IMAPGet/CLI.html#method-i-run">#run</a>
+    &mdash;
+    <span class="container">IMAPGet::CLI</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-size">#size</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet/Version.html#method-i-to_a">#to_a</a>
+    &mdash;
+    <span class="container">IMAPGet::Version</span>
+
+  <li class="method">
+    <a href="IMAPGet/Version.html#method-i-to_s">#to_s</a>
+    &mdash;
+    <span class="container">IMAPGet::Version</span>
+
+  <li class="method">
+    <a href="IMAPGet.html#method-i-uniq-21">#uniq!</a>
+    &mdash;
+    <span class="container">IMAPGet</span>
+
+  <li class="method">
+    <a href="IMAPGet/CLI.html#method-i-usage">#usage</a>
+    &mdash;
+    <span class="container">IMAPGet::CLI</span>
 </ul>
+</main>
 
 
-<footer id="validator-badges">
-  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
-  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
