@@ -27,6 +27,7 @@
 require 'time'
 require 'net/imap'
 require 'fileutils'
+require 'nuggets/hash/zip'
 
 require_relative 'imapget/version'
 
@@ -121,7 +122,7 @@ class IMAPGet
   def dupes(name, quiet = false)
     imap.examine(name)
 
-    hash = Hash.new { |h, k| h[k] = [] }
+    hash = Hash.zipkey { |h, k| h[k] = [] }
 
     1.step(size(name), step = batch_size) { |i|
       fetch_batch([[i, step]]) { |mail|
