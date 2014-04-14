@@ -3,8 +3,8 @@ class IMAPGet
   module Version
 
     MAJOR = 0
-    MINOR = 0
-    TINY  = 8
+    MINOR = 1
+    TINY  = 0
 
     class << self
 

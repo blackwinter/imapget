@@ -2,6 +2,16 @@
 
 = Revision history for imapget
 
+== 0.1.0 [2014-04-14]
+
+* Added options <tt>--dupes</tt> and <tt>--uniq</tt>.
+* Added STARTTLS support.
+* Added LOGIN as fallback for AUTHENTICATE.
+* Added +batch_size+ option.
+* Dropped +use_ssl+ options; use +ssl+ instead.
+* Dropped support for Ruby 1.8.
+* Internal refactoring.
+
 == 0.0.1 [2009-05-20]
 
 * Birthday :-)

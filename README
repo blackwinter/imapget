@@ -2,22 +2,21 @@
 
 == VERSION
 
-This documentation refers to imapget version 0.0.8
+This documentation refers to imapget version 0.1.0
 
 
 == DESCRIPTION
 
-Downloads IMAP mails locally. It deletes local mails that have been deleted
-on the server, but never ever modifies anything on the server! Thus, it's
-different from your typical *sync* tool.
+Downloads IMAP mails locally. It deletes local mails that are marked as deleted
+on the server, but, while in download mode, never ever modifies anything on the
+server! Thus, it's different from your typical *sync* tool.
 
 
 == LINKS
 
-<b></b>
-Documentation:: http://blackwinter.github.com/imapget
-Source code::   http://github.com/blackwinter/imapget
-RubyGem::       http://rubygems.org/gems/imapget
+Documentation:: https://blackwinter.github.io/imapget/
+Source code::   https://github.com/blackwinter/imapget
+RubyGem::       https://rubygems.org/gems/imapget
 
 
 == AUTHORS
@@ -27,7 +26,7 @@ RubyGem::       http://rubygems.org/gems/imapget
 
 == LICENSE AND COPYRIGHT
 
-Copyright (C) 2009-2013 Jens Wille
+Copyright (C) 2009-2014 Jens Wille
 
 imapget is free software: you can redistribute it and/or modify it under
 the terms of the GNU Affero General Public License as published by the Free
