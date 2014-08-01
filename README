@@ -14,7 +14,7 @@ server! Thus, it's different from your typical *sync* tool.
 
 == LINKS
 
-Documentation:: https://blackwinter.github.io/imapget/
+Documentation:: https://blackwinter.github.com/imapget
 Source code::   https://github.com/blackwinter/imapget
 RubyGem::       https://rubygems.org/gems/imapget
 
