@@ -1,4 +1,4 @@
-require File.expand_path(%q{../lib/imapget/version}, __FILE__)
+require_relative 'lib/imapget/version'
 
 begin
   require 'hen'
