@@ -4,21 +4,18 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class IMAPGet - imapget Application documentation (v0.1.0)</title>
-
-<link href="./fonts.css" rel="stylesheet">
-<link href="./rdoc.css" rel="stylesheet">
+<title>class IMAPGet - imapget Application documentation (v0.2.0)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
 <script src="./js/jquery.js"></script>
-<script src="./js/navigation.js"></script>
-<script src="./js/search_index.js"></script>
-<script src="./js/search.js"></script>
-<script src="./js/searcher.js"></script>
 <script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
 
 
 <body id="top" role="document" class="class">
@@ -352,20 +349,19 @@
 
           
           <div class="method-source-code" id="delete-21-source">
-            <pre><span class="ruby-comment"># File lib/imapget.rb, line 140</span>
+            <pre><span class="ruby-comment"># File lib/imapget.rb, line 141</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">delete!</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">uids</span>)
-  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">uids</span>.<span class="ruby-identifier">empty?</span>
-    <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;#{name}: #{uids.size}&quot;</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">uids</span>.<span class="ruby-identifier">empty?</span>
 
-    <span class="ruby-keyword">yield</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+  <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;#{name}: #{uids.size}&quot;</span>
 
-    <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">select</span>(<span class="ruby-identifier">name</span>)
-    <span class="ruby-identifier">count</span> = <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">store</span>(<span class="ruby-identifier">uids</span>, <span class="ruby-string">&#39;+FLAGS&#39;</span>, [<span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">IMAP</span><span class="ruby-operator">::</span><span class="ruby-constant">DELETED</span>]).<span class="ruby-identifier">size</span>
+  <span class="ruby-keyword">yield</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
 
+  <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">select</span>(<span class="ruby-identifier">name</span>)
+
+  <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">store</span>(<span class="ruby-identifier">uids</span>, <span class="ruby-string">&#39;+FLAGS&#39;</span>, [<span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">IMAP</span><span class="ruby-operator">::</span><span class="ruby-constant">DELETED</span>]).<span class="ruby-identifier">size</span>.<span class="ruby-identifier">tap</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">count</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;#{count} DELETED!&quot;</span>
-
-    <span class="ruby-identifier">count</span>
-  <span class="ruby-keyword">end</span>
+  }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -452,7 +448,7 @@
 
           
           <div class="method-source-code" id="dupes-source">
-            <pre><span class="ruby-comment"># File lib/imapget.rb, line 122</span>
+            <pre><span class="ruby-comment"># File lib/imapget.rb, line 125</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dupes</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">quiet</span> = <span class="ruby-keyword">false</span>)
   <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">examine</span>(<span class="ruby-identifier">name</span>)
 
@@ -464,11 +460,9 @@
     }
   }
 
-  <span class="ruby-identifier">dupes</span> = <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">flat_map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">_</span>, <span class="ruby-identifier">uids</span><span class="ruby-operator">|</span> <span class="ruby-identifier">uids</span>.<span class="ruby-identifier">drop</span>(<span class="ruby-value">1</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">uids</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> }.<span class="ruby-identifier">compact</span>
-
-  <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;#{name}: #{dupes.size}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">quiet</span>
-
-  <span class="ruby-identifier">dupes</span>
+  <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">flat_map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">_</span>, <span class="ruby-identifier">uids</span><span class="ruby-operator">|</span> <span class="ruby-identifier">uids</span>.<span class="ruby-identifier">drop</span>(<span class="ruby-value">1</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">uids</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> }.<span class="ruby-identifier">tap</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">dupes</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">dupes</span>.<span class="ruby-identifier">compact!</span>; <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;#{name}: #{dupes.size}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">quiet</span>
+  }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -540,9 +534,12 @@
     <span class="ruby-keyword">else</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;MailboxList or String expected, got #{mailbox.class}&quot;</span>
   <span class="ruby-keyword">end</span>
 
+  <span class="ruby-identifier">excl</span> <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">excl</span>
+  <span class="ruby-identifier">incl</span> <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">incl</span>
+
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">strategy</span>
-    <span class="ruby-keyword">when</span> <span class="ruby-value">:include</span> <span class="ruby-keyword">then</span> (<span class="ruby-identifier">excl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">excl</span>) <span class="ruby-operator">||</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">incl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">incl</span>)
-    <span class="ruby-keyword">when</span> <span class="ruby-value">:exclude</span> <span class="ruby-keyword">then</span> (<span class="ruby-identifier">excl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">excl</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">incl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">incl</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:include</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">excl</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">incl</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:exclude</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">excl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">incl</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -574,7 +571,7 @@
 
           
           <div class="method-source-code" id="get-source">
-            <pre><span class="ruby-comment"># File lib/imapget.rb, line 99</span>
+            <pre><span class="ruby-comment"># File lib/imapget.rb, line 102</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get</span>(<span class="ruby-identifier">dir</span>)
   <span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">mailbox</span><span class="ruby-operator">|</span> <span class="ruby-identifier">get_name</span>(<span class="ruby-identifier">name</span> = <span class="ruby-identifier">mailbox</span>.<span class="ruby-identifier">name</span>,
     <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">IMAP</span>.<span class="ruby-identifier">decode_utf7</span>(<span class="ruby-identifier">name</span>))) }
@@ -612,7 +609,7 @@
 
           
           <div class="method-source-code" id="get_name-source">
-            <pre><span class="ruby-comment"># File lib/imapget.rb, line 106</span>
+            <pre><span class="ruby-comment"># File lib/imapget.rb, line 109</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_name</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">dir</span>)
   <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;#{&#39;=&#39; * 10} #{name} #{&#39;=&#39; * 10}&quot;</span>
 
@@ -765,7 +762,7 @@
 
           
           <div class="method-source-code" id="size-source">
-            <pre><span class="ruby-comment"># File lib/imapget.rb, line 118</span>
+            <pre><span class="ruby-comment"># File lib/imapget.rb, line 121</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">size</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">attr</span> = <span class="ruby-string">&#39;MESSAGES&#39;</span>)
   <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">status</span>(<span class="ruby-identifier">name</span>, [<span class="ruby-identifier">attr</span>]).<span class="ruby-identifier">values</span>.<span class="ruby-identifier">first</span>
 <span class="ruby-keyword">end</span></pre>
@@ -878,7 +875,7 @@
 
           
           <div class="method-source-code" id="deleted-3F-source">
-            <pre><span class="ruby-comment"># File lib/imapget.rb, line 204</span>
+            <pre><span class="ruby-comment"># File lib/imapget.rb, line 203</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">deleted?</span>(<span class="ruby-identifier">mail</span>)
   <span class="ruby-identifier">mail</span>.<span class="ruby-identifier">attr</span>[<span class="ruby-string">&#39;FLAGS&#39;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">IMAP</span><span class="ruby-operator">::</span><span class="ruby-constant">DELETED</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -911,7 +908,7 @@
 
           
           <div class="method-source-code" id="fetch-source">
-            <pre><span class="ruby-comment"># File lib/imapget.rb, line 184</span>
+            <pre><span class="ruby-comment"># File lib/imapget.rb, line 183</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">mail</span>, <span class="ruby-identifier">dir</span>, <span class="ruby-identifier">name</span>)
   <span class="ruby-identifier">uid</span>    = <span class="ruby-identifier">mail</span>.<span class="ruby-identifier">attr</span>[<span class="ruby-string">&#39;UID&#39;</span>].<span class="ruby-identifier">to_s</span>
   <span class="ruby-identifier">file</span>   = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">uid</span>)
@@ -962,16 +959,15 @@
           <div class="method-source-code" id="fetch_batch-source">
             <pre><span class="ruby-comment"># File lib/imapget.rb, line 171</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fetch_batch</span>(<span class="ruby-identifier">batch</span>, <span class="ruby-identifier">fetch_attr</span> = <span class="ruby-constant">FETCH_ATTR</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">batch</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
-    <span class="ruby-keyword">case</span> <span class="ruby-identifier">set</span> = <span class="ruby-identifier">batch</span>.<span class="ruby-identifier">first</span>
-      <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
-        <span class="ruby-identifier">batch</span> = <span class="ruby-identifier">set</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">..</span> (<span class="ruby-identifier">set</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>)
-      <span class="ruby-keyword">when</span> <span class="ruby-constant">Range</span>
-        <span class="ruby-identifier">batch</span> = <span class="ruby-identifier">set</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">..</span> (<span class="ruby-identifier">set</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">exclude_end?</span>
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">set</span> = <span class="ruby-identifier">batch</span>.<span class="ruby-identifier">first</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
+      <span class="ruby-identifier">batch</span> = <span class="ruby-identifier">set</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">..</span> (<span class="ruby-identifier">set</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Range</span>
+      <span class="ruby-identifier">batch</span> = <span class="ruby-identifier">set</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">..</span> (<span class="ruby-identifier">set</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">exclude_end?</span>
+  <span class="ruby-keyword">end</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">batch</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
 
-  <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">uid_fetch</span>(<span class="ruby-identifier">batch</span>, <span class="ruby-identifier">fetch_attr</span>).<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">mails</span> = <span class="ruby-identifier">imap</span>.<span class="ruby-identifier">uid_fetch</span>(<span class="ruby-identifier">batch</span>, <span class="ruby-identifier">fetch_attr</span>)
+  <span class="ruby-identifier">mails</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">mails</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1002,7 +998,7 @@
 
           
           <div class="method-source-code" id="info-source">
-            <pre><span class="ruby-comment"># File lib/imapget.rb, line 217</span>
+            <pre><span class="ruby-comment"># File lib/imapget.rb, line 216</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">info</span>(<span class="ruby-identifier">msg</span>)
   <span class="ruby-identifier">log</span>(<span class="ruby-identifier">msg</span>, <span class="ruby-value">2</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -1035,7 +1031,7 @@
 
           
           <div class="method-source-code" id="log-source">
-            <pre><span class="ruby-comment"># File lib/imapget.rb, line 213</span>
+            <pre><span class="ruby-comment"># File lib/imapget.rb, line 212</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">log</span>(<span class="ruby-identifier">msg</span>, <span class="ruby-identifier">level</span> = <span class="ruby-value">1</span>)
   <span class="ruby-identifier">warn</span> <span class="ruby-identifier">msg</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">log_level</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">level</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1068,7 +1064,7 @@
 
           
           <div class="method-source-code" id="mtime-source">
-            <pre><span class="ruby-comment"># File lib/imapget.rb, line 208</span>
+            <pre><span class="ruby-comment"># File lib/imapget.rb, line 207</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">dir</span>)
   <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">IMAP</span>.<span class="ruby-identifier">format_date</span>((<span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">dir</span>) <span class="ruby-operator">?</span>
     <span class="ruby-constant">File</span>.<span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">dir</span>) <span class="ruby-operator">:</span> (<span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">dir</span>); <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-value">0</span>))).<span class="ruby-identifier">utc</span>)
@@ -1091,7 +1087,7 @@
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.1.
-  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.2.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
