@@ -90,9 +90,12 @@ class IMAPGet
       else raise TypeError, "MailboxList or String expected, got #{mailbox.class}"
     end
 
+    excl &&= name =~ excl
+    incl &&= name =~ incl
+
     case strategy
-      when :include then (excl && name =~ excl) || !(incl && name =~ incl)
-      when :exclude then (excl && name =~ excl) && !(incl && name =~ incl)
+      when :include then excl || !incl
+      when :exclude then excl && !incl
     end
   end
 
@@ -130,26 +133,23 @@ class IMAPGet
       }
     }
 
-    dupes = hash.flat_map { |_, uids| uids.drop(1) if uids.size > 1 }.compact
-
-    log "#{name}: #{dupes.size}" unless quiet
-
-    dupes
+    hash.flat_map { |_, uids| uids.drop(1) if uids.size > 1 }.tap { |dupes|
+      dupes.compact!; log "#{name}: #{dupes.size}" unless quiet
+    }
   end
 
   def delete!(name, uids)
-    unless uids.empty?
-      log "#{name}: #{uids.size}"
+    return if uids.empty?
 
-      yield if block_given?
+    log "#{name}: #{uids.size}"
 
-      imap.select(name)
-      count = imap.store(uids, '+FLAGS', [Net::IMAP::DELETED]).size
+    yield if block_given?
 
+    imap.select(name)
+
+    imap.store(uids, '+FLAGS', [Net::IMAP::DELETED]).size.tap { |count|
       log "#{count} DELETED!"
-
-      count
-    end
+    }
   end
 
   def uniq!(name, &block)
@@ -169,14 +169,12 @@ class IMAPGet
   end
 
   def fetch_batch(batch, fetch_attr = FETCH_ATTR, &block)
-    if batch.size == 1
-      case set = batch.first
-        when Array
-          batch = set.first .. (set.first + set.last - 1)
-        when Range
-          batch = set.first .. (set.last - 1) if set.exclude_end?
-      end
-    end
+    case set = batch.first
+      when Array
+        batch = set.first .. (set.first + set.last - 1)
+      when Range
+        batch = set.first .. (set.last - 1) if set.exclude_end?
+    end if batch.size == 1
 
     mails = imap.uid_fetch(batch, fetch_attr)
     mails.each(&block) if mails
