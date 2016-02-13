@@ -2,6 +2,11 @@
 
 = Revision history for imapget
 
+== 0.2.0 [2016-02-13]
+
+* Fixed batch fetching.
+* Internal refactoring.
+
 == 0.1.0 [2014-04-14]
 
 * Added options <tt>--dupes</tt> and <tt>--uniq</tt>.

@@ -13,7 +13,7 @@ begin
       email:        %q{jens.wille@gmail.com},
       license:      %q{AGPL-3.0},
       homepage:     :blackwinter,
-      dependencies: %w[cyclops nuggets],
+      dependencies: { cyclops: '~> 0.2', nuggets: '~> 1.4' },
 
       required_ruby_version: '>= 1.9.3'
     }
