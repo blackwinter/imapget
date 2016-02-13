@@ -3,7 +3,7 @@
 #                                                                             #
 # imapget -- Download IMAP mails                                              #
 #                                                                             #
-# Copyright (C) 2009-2014 Jens Wille                                          #
+# Copyright (C) 2009-2016 Jens Wille                                          #
 #                                                                             #
 # Authors:                                                                    #
 #     Jens Wille <jens.wille@gmail.com>                                       #
@@ -178,7 +178,8 @@ class IMAPGet
       end
     end
 
-    imap.uid_fetch(batch, fetch_attr).each(&block)
+    mails = imap.uid_fetch(batch, fetch_attr)
+    mails.each(&block) if mails
   end
 
   def fetch(mail, dir, name)
