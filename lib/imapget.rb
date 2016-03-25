@@ -90,12 +90,12 @@ class IMAPGet
       else raise TypeError, "MailboxList or String expected, got #{mailbox.class}"
     end
 
-    excl &&= name =~ excl
-    incl &&= name =~ incl
+    _excl = excl && name =~ excl
+    _incl = incl && name =~ incl
 
     case strategy
-      when :include then excl || !incl
-      when :exclude then excl && !incl
+      when :include then _excl || !_incl
+      when :exclude then _excl && !_incl
     end
   end
 
