@@ -2,6 +2,10 @@
 
 = Revision history for imapget
 
+== 0.2.1 [2016-03-25]
+
+* Fixed regression introduced in 0.2.0.
+
 == 0.2.0 [2016-02-13]
 
 * Fixed batch fetching.
