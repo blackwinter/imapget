@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class IMAPGet - imapget Application documentation (v0.2.0)</title>
+<title>class IMAPGet - imapget Application documentation (v0.2.1)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
@@ -534,12 +534,12 @@
     <span class="ruby-keyword">else</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;MailboxList or String expected, got #{mailbox.class}&quot;</span>
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-identifier">excl</span> <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">excl</span>
-  <span class="ruby-identifier">incl</span> <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">incl</span>
+  <span class="ruby-identifier">_excl</span> = <span class="ruby-identifier">excl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">excl</span>
+  <span class="ruby-identifier">_incl</span> = <span class="ruby-identifier">incl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">incl</span>
 
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">strategy</span>
-    <span class="ruby-keyword">when</span> <span class="ruby-value">:include</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">excl</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">incl</span>
-    <span class="ruby-keyword">when</span> <span class="ruby-value">:exclude</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">excl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">incl</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:include</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">_excl</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">_incl</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:exclude</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">_excl</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">_incl</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>

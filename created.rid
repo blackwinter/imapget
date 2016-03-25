@@ -1,7 +1,7 @@
-Sat, 13 Feb 2016 12:44:40 +0100
-README	Sat, 13 Feb 2016 12:33:41 +0100
+Fri, 25 Mar 2016 11:10:02 +0100
+README	Fri, 25 Mar 2016 11:08:45 +0100
 COPYING	Fri, 29 Apr 2011 19:08:45 +0200
-ChangeLog	Sat, 13 Feb 2016 12:36:30 +0100
-lib/imapget.rb	Sat, 13 Feb 2016 12:32:23 +0100
+ChangeLog	Fri, 25 Mar 2016 11:08:26 +0100
+lib/imapget.rb	Fri, 25 Mar 2016 11:05:47 +0100
 lib/imapget/cli.rb	Sat, 12 Apr 2014 16:39:47 +0200
-lib/imapget/version.rb	Sat, 13 Feb 2016 12:34:01 +0100
+lib/imapget/version.rb	Fri, 25 Mar 2016 11:07:47 +0100
