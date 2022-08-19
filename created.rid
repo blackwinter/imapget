@@ -1,7 +1,7 @@
-Fri, 25 Mar 2016 11:10:02 +0100
-README	Fri, 25 Mar 2016 11:08:45 +0100
+Fri, 19 Aug 2022 17:51:22 +0200
+README	Fri, 19 Aug 2022 17:48:34 +0200
 COPYING	Fri, 29 Apr 2011 19:08:45 +0200
-ChangeLog	Fri, 25 Mar 2016 11:08:26 +0100
-lib/imapget.rb	Fri, 25 Mar 2016 11:05:47 +0100
-lib/imapget/cli.rb	Sat, 12 Apr 2014 16:39:47 +0200
-lib/imapget/version.rb	Fri, 25 Mar 2016 11:07:47 +0100
+ChangeLog	Fri, 19 Aug 2022 17:47:24 +0200
+lib/imapget.rb	Fri, 05 Mar 2021 18:07:57 +0100
+lib/imapget/cli.rb	Sat, 02 Feb 2019 11:02:43 +0100
+lib/imapget/version.rb	Fri, 19 Aug 2022 17:47:55 +0200
