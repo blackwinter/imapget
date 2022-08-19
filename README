@@ -2,7 +2,7 @@
 
 == VERSION
 
-This documentation refers to imapget version 0.2.1
+This documentation refers to imapget version 0.3.0
 
 
 == DESCRIPTION
@@ -14,7 +14,7 @@ server! Thus, it's different from your typical *sync* tool.
 
 == LINKS
 
-Documentation:: https://blackwinter.github.com/imapget
+Documentation:: https://blackwinter.github.io/imapget
 Source code::   https://github.com/blackwinter/imapget
 RubyGem::       https://rubygems.org/gems/imapget
 
@@ -26,7 +26,7 @@ RubyGem::       https://rubygems.org/gems/imapget
 
 == LICENSE AND COPYRIGHT
 
-Copyright (C) 2009-2016 Jens Wille
+Copyright (C) 2009-2022 Jens Wille
 
 imapget is free software: you can redistribute it and/or modify it under
 the terms of the GNU Affero General Public License as published by the Free
