@@ -1,27 +1,28 @@
 ### Global settings
 
-:base_dir: /var/backup/mail  # Point to storage location or specify on command-line.
-:strategy: :exclude          # This is the default strategy.
+default_config:
+  base_dir: /var/backup/mail  # Point to storage location or specify on command-line.
+  strategy: exclude           # This is the default strategy.
 
 
 ### Profiles
 
 # Get all mailboxes (via SSL), *except* Spam and Trash.
 you-1:
-  :host: imap.example.com
-  :port: 123
-  :ssl:  true
-  :user: login
-  :exclude:
+  host: imap.example.com
+  port: 123
+  ssl:  true
+  user: login
+  exclude:
     - Spam
     - Trash
 
 # Get *only* mailboxes INBOX, Sent, and Drafts.
 you-2:
-  :host:     imap.example.com
-  :user:     login2
-  :strategy: :include
-  :include:
+  host:     imap.example.com
+  user:     login2
+  strategy: include
+  include:
     - INBOX
     - Sent
     - Drafts

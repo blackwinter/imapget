@@ -68,7 +68,7 @@ class IMAPGet
       end)
     }
 
-    @strategy = options.fetch(:strategy, DEFAULT_STRATEGY)
+    @strategy = options.fetch(:strategy, DEFAULT_STRATEGY).to_sym
   end
 
   def mailboxes
@@ -183,7 +183,7 @@ class IMAPGet
   def fetch(mail, dir, name)
     uid    = mail.attr['UID'].to_s
     file   = File.join(dir, uid)
-    exists = File.exists?(file)
+    exists = File.exist?(file)
 
     if deleted?(mail)
       if exists

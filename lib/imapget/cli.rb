@@ -50,7 +50,7 @@ class IMAPGet
     end
 
     def run(arguments)
-      profiles, default_config = config.partition { |k,| k.is_a?(String) }
+      default_config, profiles = config.delete(:default_config), config.to_a
 
       (arguments.empty? ? profiles.map(&:first) : arguments).each { |profile|
         profile_config = profile_config(profile, profiles, default_config) or next
@@ -67,7 +67,7 @@ class IMAPGet
           } }
         else
           imapget.get(options[:directory] ||
-            File.join(profile_config[:base_dir] || '.', profile))
+            File.join(profile_config[:base_dir] || '.', profile.to_s))
         end
       }
     end
